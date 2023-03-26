@@ -1,9 +1,7 @@
-from dataclasses import dataclass
 import datetime
 import itertools
 import os
 import re
-import requests
 import time
 from bs4 import BeautifulSoup
 import cloudscraper
