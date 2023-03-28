@@ -24,7 +24,7 @@ from config import (
 
 @dataclass
 class Property:
-    " Dataclass for keeping proeprty attributes"
+    " Dataclass for keeping property attributes"
     coordinates: str = field(default=None)
     description: str = field(default=None)
     url: str = field(default=None)
@@ -191,7 +191,7 @@ class CianPropertyParser:
             file.write(json_data)
         return file_name
     
-    def get_result(self) -> str:
+    def print_result(self) -> None:
         """Generating message with info about count of processed pages
            and prepared properties
         """
