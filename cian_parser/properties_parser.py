@@ -25,27 +25,27 @@ from config import (
 @dataclass
 class Property:
     " Dataclass for keeping property attributes"
-    coordinates: str = field(default=None)
+    coordinates: dict = field(default=None)
     description: str = field(default=None)
     url: str = field(default=None)
-    offer_id: str = field(default=None)
+    offer_id: int = field(default=None)
     date: str = field(default=None)
-    price: str = field(default=None) #RUB
+    price: int = field(default=None) #RUB
     address: str = field(default=None)
-    area: str = field(default=None)
-    rooms: str = field(default=None)
-    floor: str = field(default=None)
-    images: str = field(default=None)
+    area: float = field(default=None)
+    rooms: int = field(default=None)
+    floor: int = field(default=None)
+    images: list = field(default=None)
     buildingBuildYear: int = field(default=None)
     buildingParkingType: str = field(default=None)
     buildingMaterialType: str = field(default=None)
-    buildingFloorsCount: str = field(default=None)
+    buildingFloorsCount: int = field(default=None)
     layout: str = field(default=None)
     offerType: str = field(default=None)
     dealType: str = field(default=None)
     isApartments: str = field(default=None)
-    kitchenArea: str = field(default=None)
-    balconiesCount: str = field(default=None)
+    kitchenArea: float = field(default=None)
+    balconiesCount: int = field(default=None)
     isBuildingCommissioned: str = field(default=None)
 
 
@@ -126,7 +126,10 @@ class CianPropertyParser:
         property_item.offerType = property_data['offerType']
         property_item.dealType = property_data['dealType']
         property_item.isApartments = property_data['isApartments']
-        property_item.kitchenArea = property_data['kitchenArea']
+        try:
+            property_item.kitchenArea = float(property_data['kitchenArea'])
+        except TypeError:
+            pass # if none field
         property_item.balconiesCount = property_data['balconiesCount']
         try:
             property_item.isBuildingCommissioned = property_data['factoids'][0]['text']
