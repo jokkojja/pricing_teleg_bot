@@ -20,6 +20,7 @@ from config import (
     SCRAPE_LOG_PATH,
     START_URL,
     )
+#TODO: Add logging (info, errors, problems)
 
 @dataclass
 class Property:
