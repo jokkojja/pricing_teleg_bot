@@ -159,7 +159,7 @@ class CianPropertyParser:
             json_response = self.scrapper.post(url=API_ADDRESS, json=self.json_params).json()
             self.get_all_offers(json_response)
             self.__count_scrapped_pages += 1
-            time.sleep(5)
+            time.sleep(8)
         self.write_properties_json()
         
     def get_count_of_pages(self) -> int:
@@ -168,10 +168,12 @@ class CianPropertyParser:
         Returns:
             int: Count of pages
         """
+        #TODO: Add captcha processing, can't 
+        # get count of page because of captcha
         page = self.scrapper.get(url = self.start_url)
         soup = BeautifulSoup(page.text, 'html.parser')
         text_count_page = soup.find('h5', {'class': COUNT_PAGE_CLASS}).text
-        count_of_adds = int(''.join(re.findall(r'\d+', text_count_page)))
+        count_of_adds = int(''.join(re.findall(r'\d+', text_count_page))) 
         count_of_pages = count_of_adds // 50 + 1
         if count_of_pages > self.__max_count_of_page:
             count_of_pages = self.__max_count_of_page
@@ -202,8 +204,19 @@ class CianPropertyParser:
                     {self.__count_scrapped_pages} pages were processed \
                     and {self.__count_scrapped_properties} properties were saved."
         print(message)
-if __name__ == "__main__":
-    for i in range(7):
-        scrapper = CianPropertyParser(i)
-        scrapper.scrapping()
-        scrapper.get_result()
+        
+    def get_count_scrapped_pages(self) -> int:
+        """ Get count of scrapped pages
+
+        Returns:
+            int: Count of scrapped pages
+        """
+        return self.__count_scrapped_pages
+    
+    def get_count_scrapped_properties(self) -> int:
+        """ Get count of scrapped properties
+
+        Returns:
+            int: Count of scrapped properties
+        """
+        return self.__count_scrapped_properties
