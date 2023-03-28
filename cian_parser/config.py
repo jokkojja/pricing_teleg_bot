@@ -27,7 +27,7 @@ API_JSON = {
         },
         'page': {
             'type': 'term',
-            'value': 2, # use pagination
+            'value': None, # use pagination
         },
     },
 }
