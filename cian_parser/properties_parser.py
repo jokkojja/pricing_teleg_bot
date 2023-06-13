@@ -156,7 +156,11 @@ class CianPropertyParser:
         count_of_pages = self.get_count_of_pages()
         for page in tqdm(range(1, count_of_pages + 1)):
             self.set_page_in_api(page)
-            json_response = self.scrapper.post(url=API_ADDRESS, json=self.json_params).json()
+            try:
+                json_response = self.scrapper.post(url=API_ADDRESS, json=self.json_params).json()
+            except cloudscraper.requests.exceptions.JSONDecodeError:
+                print(API_ADDRESS, self.json_params)
+                break
             self.get_all_offers(json_response)
             self.__count_scrapped_pages += 1
             time.sleep(8)
